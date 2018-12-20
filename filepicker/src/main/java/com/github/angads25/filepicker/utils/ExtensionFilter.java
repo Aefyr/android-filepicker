@@ -23,7 +23,8 @@ import java.io.File;
 import java.io.FileFilter;
 import java.util.Locale;
 
-/**<p>
+/**
+ * <p>
  * Created by Angad Singh on 11-07-2016.
  * </p>
  */
@@ -35,34 +36,30 @@ public class ExtensionFilter implements FileFilter {
     private DialogProperties properties;
 
     public ExtensionFilter(DialogProperties properties) {
-        if(properties.extensions!=null) {
+        if (properties.extensions != null) {
             this.validExtensions = properties.extensions;
-        }
-        else {
+        } else {
             this.validExtensions = new String[]{""};
         }
-        this.properties=properties;
+        this.properties = properties;
     }
 
-    /**Function to filter files based on defined rules.
+    /**
+     * Function to filter files based on defined rules.
      */
     @Override
     public boolean accept(File file) {
         //All directories are added in the least that can be read by the Application
-        if (file.isDirectory()&&file.canRead())
-        {   return true;
-        }
-        else if(properties.selection_type==DialogConfigs.DIR_SELECT)
-        {   /*  True for files, If the selection type is Directory type, ie.
-             *  Only directory has to be selected from the list, then all files are
-             *  ignored.
-             */
+        if (file.isDirectory() && file.canRead()) {
+            return true;
+        } else if (properties.selection_type == DialogConfigs.DIR_SELECT) {   /*  True for files, If the selection type is Directory type, ie.
+         *  Only directory has to be selected from the list, then all files are
+         *  ignored.
+         */
             return false;
-        }
-        else
-        {   /*  Check whether name of the file ends with the extension. Added if it
-             *  does.
-             */
+        } else {   /*  Check whether name of the file ends with the extension. Added if it
+         *  does.
+         */
             String name = file.getName().toLowerCase(Locale.getDefault());
             for (String ext : validExtensions) {
                 if (name.endsWith(ext)) {

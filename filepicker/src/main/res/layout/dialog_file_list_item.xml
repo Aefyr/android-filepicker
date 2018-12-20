@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:focusable="false"
     android:orientation="horizontal"
     android:layout_width="match_parent"
@@ -16,7 +15,7 @@
         android:layout_marginStart="8dp"
         android:scaleType="centerInside"
         android:id="@+id/image_type"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center" />
 
     <LinearLayout
         android:orientation="vertical"
@@ -35,14 +34,14 @@
             android:id="@+id/fname"
             android:textStyle="bold"
             android:textSize="16sp"
-            style="?android:attr/textAppearanceLarge"/>
+            style="?android:attr/textAppearanceLarge" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/ftype"
             android:textSize="12sp"
-            style="?android:attr/textViewStyle"/>
+            style="?android:attr/textViewStyle" />
     </LinearLayout>
 
     <com.github.angads25.filepicker.widget.MaterialCheckbox
@@ -51,5 +50,5 @@
         android:layout_height="@dimen/checkbox_dimens"
         android:layout_gravity="center_vertical"
         android:layout_marginEnd="@dimen/checkbox_margin"
-        android:layout_marginRight="@dimen/checkbox_margin"/>
+        android:layout_marginRight="@dimen/checkbox_margin" />
 </LinearLayout>

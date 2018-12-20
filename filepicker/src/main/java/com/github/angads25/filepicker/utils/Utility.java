@@ -25,7 +25,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 
-/**<p>
+/**
+ * <p>
  * Created by Angad Singh on 11-07-2016.
  * </p>
  */
@@ -35,17 +36,15 @@ public class Utility {
      * specified in the uses-permission tag of manifest. checkStorageAccessPermissions
      * method checks whether the READ EXTERNAL STORAGE permission has been granted to
      * the Application.
+     *
      * @return a boolean value notifying whether the permission is granted or not.
      */
-    public static boolean checkStorageAccessPermissions(Context context)
-    {   //Only for Android M and above.
+    public static boolean checkStorageAccessPermissions(Context context) {   //Only for Android M and above.
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
             String permission = "android.permission.READ_EXTERNAL_STORAGE";
             int res = context.checkCallingOrSelfPermission(permission);
             return (res == PackageManager.PERMISSION_GRANTED);
-        }
-        else
-        {   //Pre Marshmallow can rely on Manifest defined permissions.
+        } else {   //Pre Marshmallow can rely on Manifest defined permissions.
             return true;
         }
     }
@@ -56,16 +55,14 @@ public class Utility {
      * is the FileFilter. A reference of ArrayList is passed, in case it
      * may contain the ListItem for parent directory. Returns the List of
      * Directories/files in the form of ArrayList.
+     *
      * @param internalList ArrayList containing parent directory.
-     *
-     * @param inter The present directory to look into.
-     *
-     * @param filter Extension filter class reference, for filtering files.
-     *
+     * @param inter        The present directory to look into.
+     * @param filter       Extension filter class reference, for filtering files.
      * @return ArrayList of FileListItem containing file info of current directory.
      */
-    public static ArrayList<FileListItem> prepareFileListEntries(ArrayList<FileListItem> internalList, File inter, ExtensionFilter filter)
-    {   try {
+    public static ArrayList<FileListItem> prepareFileListEntries(ArrayList<FileListItem> internalList, File inter, ExtensionFilter filter) {
+        try {
             //Check for each and every directory/file in 'inter' directory.
             //Filter by extension using 'filter' reference.
 
@@ -85,11 +82,9 @@ public class Utility {
             //Sort the files and directories in alphabetical order.
             //See compareTo method in FileListItem class.
             Collections.sort(internalList);
-        }
-        catch (NullPointerException e)
-        {   //Just dont worry, it rarely occurs.
+        } catch (NullPointerException e) {   //Just dont worry, it rarely occurs.
             e.printStackTrace();
-            internalList=new ArrayList<>();
+            internalList = new ArrayList<>();
         }
         return internalList;
     }

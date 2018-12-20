@@ -19,7 +19,8 @@ package com.github.angads25.filepicker.model;
 import java.util.HashMap;
 import java.util.Set;
 
-/**<p>
+/**
+ * <p>
  * Created by Angad Singh on 11-07-2016.
  * </p>
  */
@@ -29,10 +30,10 @@ import java.util.Set;
  *  Value: FileListItem Object.
  */
 public class MarkedItemList {
-    private static HashMap<String,FileListItem> ourInstance = new HashMap<>();
+    private static HashMap<String, FileListItem> ourInstance = new HashMap<>();
 
     public static void addSelectedItem(FileListItem item) {
-        ourInstance.put(item.getLocation(),item);
+        ourInstance.put(item.getLocation(), item);
     }
 
     public static void removeSelectedItem(String key) {
@@ -49,15 +50,15 @@ public class MarkedItemList {
 
     public static void addSingleFile(FileListItem item) {
         ourInstance = new HashMap<>();
-        ourInstance.put(item.getLocation(),item);
+        ourInstance.put(item.getLocation(), item);
     }
 
     public static String[] getSelectedPaths() {
         Set<String> paths = ourInstance.keySet();
-        String fpaths[]=new String[paths.size()];
-        int i=0;
-        for(String path:paths)
-        {   fpaths[i++]=path;
+        String fpaths[] = new String[paths.size()];
+        int i = 0;
+        for (String path : paths) {
+            fpaths[i++] = path;
         }
         return fpaths;
     }

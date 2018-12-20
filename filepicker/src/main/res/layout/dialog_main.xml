@@ -8,7 +8,7 @@
 
     <include
         layout="@layout/dialog_header"
-        android:id="@+id/header"/>
+        android:id="@+id/header" />
 
     <include
         layout="@layout/dialog_file_list"
@@ -18,7 +18,7 @@
         android:layout_above="@+id/footer"
         android:dividerHeight="1dp"
         android:layout_below="@+id/header"
-        tools:listitem="@layout/dialog_file_list_item"/>
+        tools:listitem="@layout/dialog_file_list_item" />
 
     <include
         layout="@layout/dialog_footer"

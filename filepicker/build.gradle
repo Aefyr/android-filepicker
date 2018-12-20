@@ -25,12 +25,11 @@ ext {
 }
 
 android {
-    compileSdkVersion 27
-    buildToolsVersion "27.0.0"
+    compileSdkVersion 28
 
     defaultConfig {
         minSdkVersion 9
-        targetSdkVersion 27
+        targetSdkVersion 28
         versionCode 12
         versionName "1.1.1"
     }
@@ -45,5 +44,5 @@ android {
     }
 }
 
-apply from: 'https://raw.githubusercontent.com/angads25/JCenter/master/installv1.gradle'
-apply from: 'https://raw.githubusercontent.com/angads25/JCenter/master/bintrayv1.gradle'
+//apply from: 'https://raw.githubusercontent.com/angads25/JCenter/master/installv1.gradle'
+//apply from: 'https://raw.githubusercontent.com/angads25/JCenter/master/bintrayv1.gradle'

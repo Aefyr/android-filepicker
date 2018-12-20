@@ -15,26 +15,26 @@
         android:background="@null" />
 
     <Button
-        style="?android:attr/buttonStyle"
-        android:background="@null"
-        android:text="@string/cancel_button_label"
         android:id="@+id/cancel"
-        android:textStyle="bold"
+        style="?android:attr/buttonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/colorAccent"
         android:layout_margin="8dp"
-        android:padding="4dp" />
+        android:background="?android:selectableItemBackground"
+        android:padding="4dp"
+        android:text="@string/cancel_button_label"
+        android:textColor="?android:attr/colorAccent"
+        android:textStyle="bold" />
 
     <Button
-        style="?android:attr/buttonStyle"
-        android:background="@null"
-        android:text="@string/choose_button_label"
-        android:textStyle="bold"
         android:id="@+id/select"
+        style="?android:attr/buttonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/colorAccent"
         android:layout_margin="8dp"
-        android:padding="4dp" />
+        android:background="?android:selectableItemBackground"
+        android:padding="4dp"
+        android:text="@string/choose_button_label"
+        android:textColor="?android:attr/colorAccent"
+        android:textStyle="bold" />
 </LinearLayout>

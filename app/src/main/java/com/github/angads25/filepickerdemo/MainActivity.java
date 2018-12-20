@@ -161,8 +161,24 @@ public class MainActivity extends AppCompatActivity
 
                 properties.error_dir=new File("/mnt");
                 //Set new properties of dialog.
-                dialog.setProperties(properties);
-
+                dialog = new FilePickerDialog(MainActivity.this, properties);
+                dialog.setDialogSelectionListener(new DialogSelectionListener() {
+                    @Override
+                    public void onSelectedFilePaths(String[] files) {
+                        //files is the array of paths selected by the App User.
+                        int size = listItem.size();
+                        listItem.clear();
+                        mFileListAdapter.notifyItemRangeRemoved(0, size);
+                        for(String path:files) {
+                            File file=new File(path);
+                            ListItem item=new ListItem();
+                            item.setName(file.getName());
+                            item.setPath(file.getAbsolutePath());
+                            listItem.add(item);
+                        }
+                        mFileListAdapter.notifyItemRangeInserted(0, listItem.size());
+                    }
+                });
 //                Pre marking of files in Dialog
 //                ArrayList<String> paths=new ArrayList<>();
 //                paths.add("/mnt/sdcard/.VOD");

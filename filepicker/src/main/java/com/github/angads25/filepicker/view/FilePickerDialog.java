@@ -20,7 +20,6 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -39,6 +38,7 @@ import com.github.angads25.filepicker.model.DialogConfigs;
 import com.github.angads25.filepicker.model.DialogProperties;
 import com.github.angads25.filepicker.model.FileListItem;
 import com.github.angads25.filepicker.model.MarkedItemList;
+import com.github.angads25.filepicker.utils.ColorUtils;
 import com.github.angads25.filepicker.utils.ExtensionFilter;
 import com.github.angads25.filepicker.utils.Utility;
 import com.github.angads25.filepicker.widget.MaterialCheckbox;
@@ -66,6 +66,7 @@ public class FilePickerDialog extends Dialog implements AdapterView.OnItemClickL
     private String titleStr = null;
     private String positiveBtnNameStr = null;
     private String negativeBtnNameStr = null;
+    private File currentDirectory;
 
     public static final int EXTERNAL_READ_PERMISSION_GRANT = 112;
 
@@ -94,28 +95,26 @@ public class FilePickerDialog extends Dialog implements AdapterView.OnItemClickL
     }
 
     @Override
-    @SuppressWarnings("deprecation")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.dialog_main);
-        listView = (ListView) findViewById(R.id.fileList);
-        select = (Button) findViewById(R.id.select);
+        listView = findViewById(R.id.fileList);
+        select = findViewById(R.id.select);
         int size = MarkedItemList.getFileCount();
-        if (size == 0) {
+        if (size == 0 && !(properties.selection_mode == DialogConfigs.SINGLE_MODE && (properties.selection_type == DialogConfigs.DIR_SELECT || properties.selection_type == DialogConfigs.FILE_AND_DIR_SELECT))) {
             select.setEnabled(false);
-            int color;
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-                color = context.getResources().getColor(R.color.colorAccent, context.getTheme());
-            } else {
-                color = context.getResources().getColor(R.color.colorAccent);
-            }
-            select.setTextColor(Color.argb(128, Color.red(color), Color.green(color), Color.blue(color)));
+            select.setTextColor(ColorUtils.muteColor(ColorUtils.getAccentColor(context)));
         }
-        dname = (TextView) findViewById(R.id.dname);
-        title = (TextView) findViewById(R.id.title);
-        dir_path = (TextView) findViewById(R.id.dir_path);
-        Button cancel = (Button) findViewById(R.id.cancel);
+        if (properties.selection_mode == DialogConfigs.SINGLE_MODE && properties.selection_type == DialogConfigs.FILE_SELECT)
+            select.setVisibility(View.GONE);
+        else
+            select.setVisibility(View.VISIBLE);
+
+        dname = findViewById(R.id.dname);
+        title = findViewById(R.id.title);
+        dir_path = findViewById(R.id.dir_path);
+        Button cancel = findViewById(R.id.cancel);
         if (negativeBtnNameStr != null) {
             cancel.setText(negativeBtnNameStr);
         }
@@ -125,12 +124,15 @@ public class FilePickerDialog extends Dialog implements AdapterView.OnItemClickL
                 /*  Select Button is clicked. Get the array of all selected items
                  *  from MarkedItemList singleton.
                  */
-                String paths[] = MarkedItemList.getSelectedPaths();
-                //NullPointerException fixed in v1.0.2
-                if (callbacks != null) {
-                    callbacks.onSelectedFilePaths(paths);
+                if (properties.selection_mode == DialogConfigs.SINGLE_MODE && (properties.selection_type == DialogConfigs.DIR_SELECT || properties.selection_type == DialogConfigs.FILE_AND_DIR_SELECT)) {
+                    FileListItem item = new FileListItem();
+                    item.setFilename(currentDirectory.getName());
+                    item.setDirectory(currentDirectory.isDirectory());
+                    item.setLocation(currentDirectory.getAbsolutePath());
+                    item.setTime(currentDirectory.lastModified());
+                    MarkedItemList.addSingleFile(item);
                 }
-                dismiss();
+                finishSelection();
             }
         });
         cancel.setOnClickListener(new View.OnClickListener() {
@@ -151,25 +153,11 @@ public class FilePickerDialog extends Dialog implements AdapterView.OnItemClickL
                 int size = MarkedItemList.getFileCount();
                 if (size == 0) {
                     select.setEnabled(false);
-                    int color;
-                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-                        color = context.getResources().getColor(R.color.colorAccent, context.getTheme());
-                    }
-                    else {
-                        color = context.getResources().getColor(R.color.colorAccent);
-                    }
-                    select.setTextColor(Color.argb(128, Color.red(color), Color.green(color), Color.blue(color)));
+                    select.setTextColor(ColorUtils.muteColor(ColorUtils.getAccentColor(context)));
                     select.setText(positiveBtnNameStr);
                 } else {
                     select.setEnabled(true);
-                    int color;
-                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-                        color = context.getResources().getColor(R.color.colorAccent, context.getTheme());
-                    }
-                    else {
-                        color = context.getResources().getColor(R.color.colorAccent);
-                    }
-                    select.setTextColor(color);
+                    select.setTextColor(ColorUtils.getAccentColor(context));
                     String button_label = positiveBtnNameStr + " (" + size + ") ";
                     select.setText(button_label);
                 }
@@ -214,30 +202,29 @@ public class FilePickerDialog extends Dialog implements AdapterView.OnItemClickL
         super.onStart();
         positiveBtnNameStr = (
                 positiveBtnNameStr == null ?
-                context.getResources().getString(R.string.choose_button_label) :
-                positiveBtnNameStr
+                        context.getResources().getString(R.string.choose_button_label) :
+                        positiveBtnNameStr
         );
         select.setText(positiveBtnNameStr);
         if (Utility.checkStorageAccessPermissions(context)) {
-            File currLoc;
             internalList.clear();
             if (properties.offset.isDirectory() && validateOffsetPath()) {
-                currLoc = new File(properties.offset.getAbsolutePath());
+                currentDirectory = new File(properties.offset.getAbsolutePath());
                 FileListItem parent = new FileListItem();
                 parent.setFilename(context.getString(R.string.label_parent_dir));
                 parent.setDirectory(true);
-                parent.setLocation(currLoc.getParentFile().getAbsolutePath());
-                parent.setTime(currLoc.lastModified());
+                parent.setLocation(currentDirectory.getParentFile().getAbsolutePath());
+                parent.setTime(currentDirectory.lastModified());
                 internalList.add(parent);
             } else if (properties.root.exists() && properties.root.isDirectory()) {
-                currLoc = new File(properties.root.getAbsolutePath());
+                currentDirectory = new File(properties.root.getAbsolutePath());
             } else {
-                currLoc = new File(properties.error_dir.getAbsolutePath());
+                currentDirectory = new File(properties.error_dir.getAbsolutePath());
             }
-            dname.setText(currLoc.getName());
-            dir_path.setText(currLoc.getAbsolutePath());
+            dname.setText(currentDirectory.getName());
+            dir_path.setText(currentDirectory.getAbsolutePath());
             setTitle();
-            internalList = Utility.prepareFileListEntries(internalList, currLoc, filter);
+            internalList = Utility.prepareFileListEntries(internalList, currentDirectory, filter);
             mFileListAdapter.notifyDataSetChanged();
             listView.setOnItemClickListener(this);
         }
@@ -255,27 +242,32 @@ public class FilePickerDialog extends Dialog implements AdapterView.OnItemClickL
             FileListItem fitem = internalList.get(i);
             if (fitem.isDirectory()) {
                 if (new File(fitem.getLocation()).canRead()) {
-                    File currLoc = new File(fitem.getLocation());
-                    dname.setText(currLoc.getName());
+                    currentDirectory = new File(fitem.getLocation());
+                    dname.setText(currentDirectory.getName());
                     setTitle();
-                    dir_path.setText(currLoc.getAbsolutePath());
+                    dir_path.setText(currentDirectory.getAbsolutePath());
                     internalList.clear();
-                    if (!currLoc.getName().equals(properties.root.getName())) {
+                    if (!currentDirectory.getName().equals(properties.root.getName())) {
                         FileListItem parent = new FileListItem();
                         parent.setFilename(context.getString(R.string.label_parent_dir));
                         parent.setDirectory(true);
-                        parent.setLocation(currLoc.getParentFile().getAbsolutePath());
-                        parent.setTime(currLoc.lastModified());
+                        parent.setLocation(currentDirectory.getParentFile().getAbsolutePath());
+                        parent.setTime(currentDirectory.lastModified());
                         internalList.add(parent);
                     }
-                    internalList = Utility.prepareFileListEntries(internalList, currLoc, filter);
+                    internalList = Utility.prepareFileListEntries(internalList, currentDirectory, filter);
                     mFileListAdapter.notifyDataSetChanged();
                 } else {
                     Toast.makeText(context, R.string.error_dir_access, Toast.LENGTH_SHORT).show();
                 }
             } else {
-                MaterialCheckbox fmark = (MaterialCheckbox) view.findViewById(R.id.file_mark);
-                fmark.performClick();
+                if (properties.selection_mode == DialogConfigs.SINGLE_MODE) {
+                    MarkedItemList.addSingleFile(fitem);
+                    finishSelection();
+                } else {
+                    MaterialCheckbox fmark = (MaterialCheckbox) view.findViewById(R.id.file_mark);
+                    fmark.performClick();
+                }
             }
         }
     }
@@ -284,7 +276,7 @@ public class FilePickerDialog extends Dialog implements AdapterView.OnItemClickL
         return properties;
     }
 
-    public void setProperties(DialogProperties properties) {
+    void setProperties(DialogProperties properties) {
         this.properties = properties;
         filter = new ExtensionFilter(properties);
     }
@@ -464,5 +456,13 @@ public class FilePickerDialog extends Dialog implements AdapterView.OnItemClickL
         MarkedItemList.clearSelectionList();
         internalList.clear();
         super.dismiss();
+    }
+
+    private void finishSelection() {
+        String paths[] = MarkedItemList.getSelectedPaths();
+        if (callbacks != null)
+            callbacks.onSelectedFilePaths(paths);
+
+        dismiss();
     }
 }
