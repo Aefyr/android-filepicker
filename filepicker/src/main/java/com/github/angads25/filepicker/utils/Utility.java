@@ -19,11 +19,15 @@ package com.github.angads25.filepicker.utils;
 import android.content.Context;
 import android.content.pm.PackageManager;
 
+import com.github.angads25.filepicker.model.DialogConfigs;
+import com.github.angads25.filepicker.model.DialogProperties;
 import com.github.angads25.filepicker.model.FileListItem;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.Locale;
 
 /**
  * <p>
@@ -61,7 +65,7 @@ public class Utility {
      * @param filter       Extension filter class reference, for filtering files.
      * @return ArrayList of FileListItem containing file info of current directory.
      */
-    public static ArrayList<FileListItem> prepareFileListEntries(ArrayList<FileListItem> internalList, File inter, ExtensionFilter filter) {
+    public static ArrayList<FileListItem> prepareFileListEntries(ArrayList<FileListItem> internalList, File inter, ExtensionFilter filter, Comparator<FileListItem> sorter) {
         try {
             //Check for each and every directory/file in 'inter' directory.
             //Filter by extension using 'filter' reference.
@@ -81,7 +85,7 @@ public class Utility {
             }
             //Sort the files and directories in alphabetical order.
             //See compareTo method in FileListItem class.
-            Collections.sort(internalList);
+            Collections.sort(internalList, sorter);
         } catch (NullPointerException e) {   //Just dont worry, it rarely occurs.
             e.printStackTrace();
             internalList = new ArrayList<>();
@@ -89,20 +93,53 @@ public class Utility {
         return internalList;
     }
 
-    /**
-     * Method checks whether the Support Library has been imported by application
-     * or not.
-     *
-     * @return A boolean notifying value wheter support library is imported as a
-     * dependency or not.
-     */
-    private boolean hasSupportLibraryInClasspath() {
-        try {
-            Class.forName("com.android.support:appcompat-v7");
-            return true;
-        } catch (ClassNotFoundException ex) {
-            ex.printStackTrace();
+    public static Comparator<FileListItem> createFileListItemsComparator(DialogProperties properties){
+        final Comparator<FileListItem> comparator;
+        if(properties.sortBy == DialogConfigs.SORT_BY_LAST_MODIFIED){
+            comparator = new Comparator<FileListItem>() {
+                @Override
+                public int compare(FileListItem item1, FileListItem item2) {
+                    if (item2.isDirectory() && item1.isDirectory()) {   //If the comparison is between two directories, return the directory with
+                        //alphabetic order first.
+                        return -Long.compare(item1.getTime(), item2.getTime());
+                    } else if (!item2.isDirectory() && !item1.isDirectory()) {   //If the comparison is not between two directories, return the file with
+                        //alphabetic order first.
+                        return -Long.compare(item1.getTime(), item2.getTime());
+                    } else if (item2.isDirectory() && !item1.isDirectory()) {   //If the comparison is between a directory and a file, return the directory.
+                        return 1;
+                    } else {   //Same as above but order of occurence is different.
+                        return -1;
+                    }
+                }
+            };
+        }else {
+            comparator = new Comparator<FileListItem>() {
+                @Override
+                public int compare(FileListItem item1, FileListItem item2) {
+                    if (item2.isDirectory() && item1.isDirectory()) {   //If the comparison is between two directories, return the directory with
+                        //alphabetic order first.
+                        return item1.getFilename().toLowerCase().compareTo(item2.getFilename().toLowerCase(Locale.getDefault()));
+                    } else if (!item2.isDirectory() && !item1.isDirectory()) {   //If the comparison is not between two directories, return the file with
+                        //alphabetic order first.
+                        return item1.getFilename().toLowerCase().compareTo(item2.getFilename().toLowerCase(Locale.getDefault()));
+                    } else if (item2.isDirectory() && !item1.isDirectory()) {   //If the comparison is between a directory and a file, return the directory.
+                        return 1;
+                    } else {   //Same as above but order of occurence is different.
+                        return -1;
+                    }
+                }
+            };
         }
-        return false;
+
+        if(properties.sortOrder == DialogConfigs.SORT_ORDER_REVERSE){
+            return new Comparator<FileListItem>() {
+                @Override
+                public int compare(FileListItem o1, FileListItem o2) {
+                    return -comparator.compare(o1, o2);
+                }
+            };
+        }
+
+        return comparator;
     }
 }

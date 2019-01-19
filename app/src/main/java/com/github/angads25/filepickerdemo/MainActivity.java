@@ -156,6 +156,8 @@ public class MainActivity extends AppCompatActivity
                     properties.offset=new File(DialogConfigs.DEFAULT_DIR);
                 }
 
+                properties.sortBy = DialogConfigs.SORT_BY_LAST_MODIFIED;
+
                 //Setting Alternative Directory, in case root is not accessible.This will be
                 //used.
 

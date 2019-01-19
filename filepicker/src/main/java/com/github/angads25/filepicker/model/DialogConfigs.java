@@ -62,4 +62,12 @@ public abstract class DialogConfigs {
      *  mount point.
      */
     public static final String DEFAULT_DIR = DIRECTORY_SEPERATOR + STORAGE_DIR;
+
+    public static final int SORT_BY_NAME = 0;
+
+    public static final int SORT_BY_LAST_MODIFIED = 1;
+
+    public static final int SORT_ORDER_NORMAL = 0;
+
+    public static final int SORT_ORDER_REVERSE = 1;
 }
