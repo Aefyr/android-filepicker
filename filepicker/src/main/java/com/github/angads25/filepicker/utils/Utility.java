@@ -95,16 +95,23 @@ public class Utility {
 
     public static Comparator<FileListItem> createFileListItemsComparator(DialogProperties properties){
         final Comparator<FileListItem> comparator;
+        final boolean reversed = properties.sortOrder == DialogConfigs.SORT_ORDER_REVERSE;
+
         if(properties.sortBy == DialogConfigs.SORT_BY_LAST_MODIFIED){
             comparator = new Comparator<FileListItem>() {
                 @Override
                 public int compare(FileListItem item1, FileListItem item2) {
-                    if (item2.isDirectory() && item1.isDirectory()) {   //If the comparison is between two directories, return the directory with
-                        //alphabetic order first.
-                        return -Long.compare(item1.getTime(), item2.getTime());
+                    if (item2.isDirectory() && item1.isDirectory()) {
+                        if(item1.getFilename().equals("..."))
+                            return -1;
+
+                        if(item2.getFilename().equals("..."))
+                            return 1;
+
+                        return -Long.compare(item1.getTime(), item2.getTime()) * (reversed?-1:1);
                     } else if (!item2.isDirectory() && !item1.isDirectory()) {   //If the comparison is not between two directories, return the file with
                         //alphabetic order first.
-                        return -Long.compare(item1.getTime(), item2.getTime());
+                        return -Long.compare(item1.getTime(), item2.getTime())* (reversed?-1:1);
                     } else if (item2.isDirectory() && !item1.isDirectory()) {   //If the comparison is between a directory and a file, return the directory.
                         return 1;
                     } else {   //Same as above but order of occurence is different.
@@ -116,26 +123,22 @@ public class Utility {
             comparator = new Comparator<FileListItem>() {
                 @Override
                 public int compare(FileListItem item1, FileListItem item2) {
-                    if (item2.isDirectory() && item1.isDirectory()) {   //If the comparison is between two directories, return the directory with
-                        //alphabetic order first.
-                        return item1.getFilename().toLowerCase().compareTo(item2.getFilename().toLowerCase(Locale.getDefault()));
+                    if (item2.isDirectory() && item1.isDirectory()) {
+                        if(item1.getFilename().equals("..."))
+                            return -1;
+
+                        if(item2.getFilename().equals("..."))
+                            return 1;
+
+                        return item1.getFilename().toLowerCase().compareTo(item2.getFilename().toLowerCase(Locale.getDefault()))* (reversed?-1:1);
                     } else if (!item2.isDirectory() && !item1.isDirectory()) {   //If the comparison is not between two directories, return the file with
                         //alphabetic order first.
-                        return item1.getFilename().toLowerCase().compareTo(item2.getFilename().toLowerCase(Locale.getDefault()));
+                        return item1.getFilename().toLowerCase().compareTo(item2.getFilename().toLowerCase(Locale.getDefault()))* (reversed?-1:1);
                     } else if (item2.isDirectory() && !item1.isDirectory()) {   //If the comparison is between a directory and a file, return the directory.
                         return 1;
                     } else {   //Same as above but order of occurence is different.
                         return -1;
                     }
-                }
-            };
-        }
-
-        if(properties.sortOrder == DialogConfigs.SORT_ORDER_REVERSE){
-            return new Comparator<FileListItem>() {
-                @Override
-                public int compare(FileListItem o1, FileListItem o2) {
-                    return -comparator.compare(o1, o2);
                 }
             };
         }
