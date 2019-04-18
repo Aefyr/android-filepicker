@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-   <string name="app_name">FilePickerDemo</string>
-   <string name="choose_button_label">Select</string>
-   <string name="show_dialog">Show Dialog</string>
-   <string name="title_activity_settings">Settings</string>
+    <string name="app_name">FilePickerDemo</string>
+    <string name="choose_button_label">Select</string>
+    <string name="show_dialog">Show Dialog</string>
+    <string name="title_activity_settings">Settings</string>
     <string name="label_apply">Apply</string>
     <string name="hint_offset">eg. /mnt/sdcard/Music or leave empty</string>
     <string name="label_offset_directory">Offset Directory</string>

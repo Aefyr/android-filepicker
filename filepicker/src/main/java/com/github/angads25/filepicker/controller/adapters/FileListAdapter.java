@@ -23,6 +23,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -34,8 +35,7 @@ import com.github.angads25.filepicker.model.DialogProperties;
 import com.github.angads25.filepicker.model.FileListItem;
 import com.github.angads25.filepicker.model.MarkedItemList;
 import com.github.angads25.filepicker.utils.ColorUtils;
-import com.github.angads25.filepicker.widget.MaterialCheckbox;
-import com.github.angads25.filepicker.widget.OnCheckedChangeListener;
+import com.google.android.material.checkbox.MaterialCheckBox;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -123,6 +123,7 @@ public class FileListAdapter extends BaseAdapter {
             holder.type.setText(String.format(context.getString(R.string.last_edit), sdate.format(date)));
         }
 
+        holder.checkbox.setOnCheckedChangeListener(null);
         if (holder.checkbox.getVisibility() == View.VISIBLE) {
             if (i == 0 && item.getFilename().startsWith(context.getString(R.string.label_parent_dir))) {
                 holder.checkbox.setVisibility(View.INVISIBLE);
@@ -134,14 +135,16 @@ public class FileListAdapter extends BaseAdapter {
 
             if (MarkedItemList.hasItem(item.getLocation())) {
                 holder.checkbox.setChecked(true);
+                holder.checkbox.jumpDrawablesToCurrentState();
             } else {
                 holder.checkbox.setChecked(false);
+                holder.checkbox.jumpDrawablesToCurrentState();
             }
         }
 
-        holder.checkbox.setOnCheckedChangedListener(new OnCheckedChangeListener() {
+        holder.checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(MaterialCheckbox checkbox, boolean isChecked) {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 item.setMarked(isChecked);
                 if (item.isMarked()) {
                     if (properties.selection_mode == DialogConfigs.MULTI_MODE) {
@@ -161,13 +164,13 @@ public class FileListAdapter extends BaseAdapter {
     private class ViewHolder {
         ImageView icon;
         TextView name, type;
-        MaterialCheckbox checkbox;
+        MaterialCheckBox checkbox;
 
         ViewHolder(View itemView) {
             name = (TextView) itemView.findViewById(R.id.fname);
             type = (TextView) itemView.findViewById(R.id.ftype);
             icon = (ImageView) itemView.findViewById(R.id.image_type);
-            checkbox = (MaterialCheckbox) itemView.findViewById(R.id.file_mark);
+            checkbox = itemView.findViewById(R.id.file_mark);
         }
     }
 

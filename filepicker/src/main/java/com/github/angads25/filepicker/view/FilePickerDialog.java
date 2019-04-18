@@ -38,10 +38,9 @@ import com.github.angads25.filepicker.model.DialogConfigs;
 import com.github.angads25.filepicker.model.DialogProperties;
 import com.github.angads25.filepicker.model.FileListItem;
 import com.github.angads25.filepicker.model.MarkedItemList;
-import com.github.angads25.filepicker.utils.ColorUtils;
 import com.github.angads25.filepicker.utils.ExtensionFilter;
 import com.github.angads25.filepicker.utils.Utility;
-import com.github.angads25.filepicker.widget.MaterialCheckbox;
+import com.google.android.material.checkbox.MaterialCheckBox;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -71,7 +70,7 @@ public class FilePickerDialog extends Dialog implements AdapterView.OnItemClickL
     public static final int EXTERNAL_READ_PERMISSION_GRANT = 112;
 
     public FilePickerDialog(Context context) {
-        super(context);
+        super(context, R.style.FilePickerDialog_DefaultTheme);
         this.context = context;
         properties = new DialogProperties();
         filter = new ExtensionFilter(properties);
@@ -79,7 +78,7 @@ public class FilePickerDialog extends Dialog implements AdapterView.OnItemClickL
     }
 
     public FilePickerDialog(Context context, DialogProperties properties) {
-        super(context);
+        super(context, R.style.FilePickerDialog_DefaultTheme);
         this.context = context;
         this.properties = properties;
         filter = new ExtensionFilter(properties);
@@ -104,7 +103,6 @@ public class FilePickerDialog extends Dialog implements AdapterView.OnItemClickL
         int size = MarkedItemList.getFileCount();
         if (size == 0 && !(properties.selection_mode == DialogConfigs.SINGLE_MODE && (properties.selection_type == DialogConfigs.DIR_SELECT || properties.selection_type == DialogConfigs.FILE_AND_DIR_SELECT))) {
             select.setEnabled(false);
-            select.setTextColor(ColorUtils.muteColor(ColorUtils.getAccentColor(context)));
         }
         if (properties.selection_mode == DialogConfigs.SINGLE_MODE && properties.selection_type == DialogConfigs.FILE_SELECT)
             select.setVisibility(View.GONE);
@@ -153,11 +151,9 @@ public class FilePickerDialog extends Dialog implements AdapterView.OnItemClickL
                 int size = MarkedItemList.getFileCount();
                 if (size == 0) {
                     select.setEnabled(false);
-                    select.setTextColor(ColorUtils.muteColor(ColorUtils.getAccentColor(context)));
                     select.setText(positiveBtnNameStr);
                 } else {
                     select.setEnabled(true);
-                    select.setTextColor(ColorUtils.getAccentColor(context));
                     String button_label = positiveBtnNameStr + " (" + size + ") ";
                     select.setText(button_label);
                 }
@@ -265,7 +261,7 @@ public class FilePickerDialog extends Dialog implements AdapterView.OnItemClickL
                     MarkedItemList.addSingleFile(fitem);
                     finishSelection();
                 } else {
-                    MaterialCheckbox fmark = (MaterialCheckbox) view.findViewById(R.id.file_mark);
+                    MaterialCheckBox fmark = view.findViewById(R.id.file_mark);
                     fmark.performClick();
                 }
             }

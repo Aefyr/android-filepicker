@@ -16,12 +16,13 @@
 
 package com.github.angads25.filepickerdemo;
 
-/**<p>
+/**
+ * <p>
  * Created by Angad Singh on 11-07-2016.
  * </p>
  */
-public class ListItem
-{   private String name,path;
+public class ListItem {
+    private String name, path;
 
     public String getName() {
         return name;

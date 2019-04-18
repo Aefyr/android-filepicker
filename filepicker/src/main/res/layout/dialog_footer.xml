@@ -14,27 +14,19 @@
         android:layout_weight="1"
         android:background="@null" />
 
-    <Button
-        style="?android:attr/buttonStyle"
-        android:background="@null"
-        android:text="@string/cancel_button_label"
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/cancel"
-        android:textStyle="bold"
+        style="?attr/filePickerDialogCancelButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/colorAccent"
         android:layout_margin="8dp"
-        android:padding="4dp" />
+        android:text="@string/cancel_button_label" />
 
-    <Button
-        style="?android:attr/buttonStyle"
-        android:background="@null"
-        android:text="@string/choose_button_label"
-        android:textStyle="bold"
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/select"
+        style="?attr/filePickerDialogSelectButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/colorAccent"
         android:layout_margin="8dp"
-        android:padding="4dp" />
+        android:text="@string/choose_button_label" />
 </LinearLayout>

@@ -43,11 +43,11 @@
             style="?android:attr/textViewStyle" />
     </LinearLayout>
 
-    <com.github.angads25.filepicker.widget.MaterialCheckbox
+    <com.google.android.material.checkbox.MaterialCheckBox
         android:id="@+id/file_mark"
-        android:layout_width="@dimen/checkbox_dimens"
-        android:layout_height="@dimen/checkbox_dimens"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:layout_marginEnd="@dimen/checkbox_margin"
-        android:background="?android:attr/selectableItemBackgroundBorderless" />
+        android:layout_marginEnd="@dimen/checkbox_margin" />
+
 </LinearLayout>

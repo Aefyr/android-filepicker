@@ -22,4 +22,8 @@
         <attr name="title_text" format="string" />
 
     </declare-styleable>
+
+    <attr name="filePickerDialogCancelButtonStyle" format="reference" />
+    <attr name="filePickerDialogSelectButtonStyle" format="reference" />
+
 </resources>

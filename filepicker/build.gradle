@@ -44,5 +44,9 @@ android {
     }
 }
 
+dependencies {
+    implementation 'com.google.android.material:material:1.1.0-alpha05'
+}
+
 //apply from: 'https://raw.githubusercontent.com/angads25/JCenter/master/installv1.gradle'
 //apply from: 'https://raw.githubusercontent.com/angads25/JCenter/master/bintrayv1.gradle'
