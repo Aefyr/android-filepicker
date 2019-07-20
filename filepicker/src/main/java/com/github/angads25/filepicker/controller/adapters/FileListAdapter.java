@@ -97,7 +97,7 @@ public class FileListAdapter extends BaseAdapter {
             view.setAnimation(animation);
         }
         if (item.isDirectory()) {
-            holder.icon.setImageResource(R.mipmap.ic_type_folder);
+            holder.icon.setImageResource(R.drawable.ic_type_folder);
             holder.icon.setColorFilter(null);
             if (properties.selection_type == DialogConfigs.FILE_SELECT) {
                 holder.checkbox.setVisibility(View.INVISIBLE);
@@ -105,7 +105,7 @@ public class FileListAdapter extends BaseAdapter {
                 holder.checkbox.setVisibility(View.VISIBLE);
             }
         } else {
-            holder.icon.setImageResource(R.mipmap.ic_type_file);
+            holder.icon.setImageResource(R.drawable.ic_type_file);
             holder.icon.setColorFilter(ColorUtils.getAccentColor(context));
             if (properties.selection_type == DialogConfigs.DIR_SELECT) {
                 holder.checkbox.setVisibility(View.INVISIBLE);

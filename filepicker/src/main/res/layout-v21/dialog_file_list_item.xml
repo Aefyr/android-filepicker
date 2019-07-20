@@ -15,7 +15,7 @@
         android:layout_gravity="center"
         android:layout_marginStart="8dp"
         android:scaleType="centerInside"
-        android:tint="?android:attr/textColorPrimary" />
+        android:tint="?android:attr/colorAccent" />
 
     <LinearLayout
         android:orientation="vertical"
