@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:minHeight="?android:listPreferredItemHeight"
-    android:descendantFocusability="blocksDescendants"
-    style="?android:attr/background">
+    android:descendantFocusability="blocksDescendants">
 
     <ImageView
         android:id="@+id/image_type"
@@ -18,29 +17,30 @@
         android:tint="?android:attr/colorAccent" />
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="0dp"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
         android:layout_marginStart="8dp"
         android:layout_weight="1"
         android:focusable="false"
         android:gravity="center_vertical"
-        style="?android:attr/background">
+        android:orientation="vertical">
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:id="@+id/fname"
-            android:textStyle="bold"
-            android:textSize="16sp"
-            style="?android:attr/textAppearanceLarge" />
-
-        <TextView
+            style="?android:attr/textAppearanceLarge"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="real long name real long name real long name real long nreal long name real long name real long name real long name real long name real long name real long name real long name real long name real long name real long name real long name real long name real long name real long name real long name real long name real long name real long name real long name real long name real long name real long name real long name real long name ame real long name "
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
             android:id="@+id/ftype"
-            android:textSize="12sp"
-            style="?android:attr/textViewStyle" />
+            style="?android:attr/textViewStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="12sp" />
     </LinearLayout>
 
     <com.google.android.material.checkbox.MaterialCheckBox
