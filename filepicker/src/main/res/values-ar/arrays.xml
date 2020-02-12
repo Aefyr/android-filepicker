@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="size_units">
+        <item>بت</item>
+        <item>كيلوبايت</item>
+        <item>ميجابايت</item>
+        <item>جيجابايت</item>
+        <item>تيرابايت</item>
+        <item>بيتابايت</item>
+    </string-array>
+
+</resources>

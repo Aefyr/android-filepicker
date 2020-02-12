@@ -30,6 +30,7 @@ public class FileListItem implements Comparable<FileListItem> {
     private String filename, location;
     private boolean directory, marked;
     private long time;
+    private long size;
 
     public String getFilename() {
         return filename;
@@ -69,6 +70,14 @@ public class FileListItem implements Comparable<FileListItem> {
 
     public void setMarked(boolean marked) {
         this.marked = marked;
+    }
+
+    public long getSize() {
+        return size;
+    }
+
+    public void setSize(long size) {
+        this.size = size;
     }
 
     @Override

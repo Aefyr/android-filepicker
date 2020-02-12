@@ -5,4 +5,5 @@
     <string name="label_parent_directory">上層資料夾</string>
     <string name="last_edit">最後修改：%s</string>
     <string name="error_dir_access">Directory cannot be accessed</string>
+    <string name="last_edit_with_size">%1$s, 最後修改：%2$s</string>
 </resources>

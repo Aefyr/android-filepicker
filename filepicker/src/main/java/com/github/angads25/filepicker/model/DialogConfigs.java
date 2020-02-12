@@ -67,6 +67,8 @@ public abstract class DialogConfigs {
 
     public static final int SORT_BY_LAST_MODIFIED = 1;
 
+    public static final int SORT_BY_SIZE = 2;
+
     public static final int SORT_ORDER_NORMAL = 0;
 
     public static final int SORT_ORDER_REVERSE = 1;

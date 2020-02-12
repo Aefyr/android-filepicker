@@ -35,6 +35,7 @@ import com.github.angads25.filepicker.model.DialogProperties;
 import com.github.angads25.filepicker.model.FileListItem;
 import com.github.angads25.filepicker.model.MarkedItemList;
 import com.github.angads25.filepicker.utils.ColorUtils;
+import com.github.angads25.filepicker.utils.Utility;
 import com.google.android.material.checkbox.MaterialCheckBox;
 
 import java.text.SimpleDateFormat;
@@ -119,8 +120,10 @@ public class FileListAdapter extends BaseAdapter {
         Date date = new Date(item.getTime());
         if (i == 0 && item.getFilename().startsWith(context.getString(R.string.label_parent_dir))) {
             holder.type.setText(R.string.label_parent_directory);
-        } else {
+        } else if (item.isDirectory()) {
             holder.type.setText(String.format(context.getString(R.string.last_edit), sdate.format(date)));
+        } else {
+            holder.type.setText(String.format(context.getString(R.string.last_edit_with_size), Utility.formatSize(context, item.getSize()), sdate.format(date)));
         }
 
         holder.checkbox.setOnCheckedChangeListener(null);

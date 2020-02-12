@@ -5,4 +5,5 @@
     <string name="label_parent_directory">Répertoire parent</string>
     <string name="last_edit">Dernière modification: %s</string>
     <string name="error_dir_access">L\'annuaire ne peut pas être consulté</string>
+    <string name="last_edit_with_size">%1$s, dernière modification: %2$s</string>
 </resources>
