@@ -4,5 +4,6 @@
     <string name="choose_button_label">تحديد</string>
     <string name="label_parent_directory">المجلد الأصل</string>
     <string name="last_edit">آخر تعديل:%s</string>
+    <string name="last_edit_with_size">%1$s, last modified: %2$s</string>
     <string name="error_dir_access">لا يمكن الوصول إلى المجلد</string>
 </resources>

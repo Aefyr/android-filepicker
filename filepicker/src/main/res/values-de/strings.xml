@@ -4,6 +4,6 @@
     <string name="choose_button_label">Auswählen</string>
     <string name="label_parent_directory">Verzeichnis hoch</string>
     <string name="last_edit">Zuletzt bearbeitet: %s</string>
-    <string name="error_dir_access">Verzeichnis kann nicht zugegriffen werden</string>
     <string name="last_edit_with_size">%1$s, zuletzt bearbeitet: %2$s</string>
+    <string name="error_dir_access">Verzeichnis kann nicht zugegriffen werden</string>
 </resources>

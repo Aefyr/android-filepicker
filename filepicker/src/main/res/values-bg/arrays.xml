@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string-array name="size_units">
         <item>Б</item>
         <item>КБ</item>
@@ -9,6 +8,4 @@
         <item>ТБ</item>
         <item>ПБ</item>
     </string-array>
-
-
 </resources>
