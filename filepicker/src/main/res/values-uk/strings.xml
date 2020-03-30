@@ -2,8 +2,8 @@
 <resources>
     <string name="cancel_button_label">Відміна</string>
     <string name="choose_button_label">Вибрати</string>
-    <string name="error_dir_access">Тека недоступна</string>
     <string name="label_parent_directory">Батьківська тека</string>
     <string name="last_edit">Останні зміни: %s</string>
     <string name="last_edit_with_size">%1$s, останні зміни: %2$s</string>
+    <string name="error_dir_access">Тека недоступна</string>
 </resources>
