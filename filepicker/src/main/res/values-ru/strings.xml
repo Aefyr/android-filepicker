@@ -4,6 +4,6 @@
     <string name="choose_button_label">Выбрать</string>
     <string name="label_parent_directory">Родительская директория</string>
     <string name="last_edit">Последнее изменение: %s</string>
-    <string name="error_dir_access">Директория недоступна</string>
     <string name="last_edit_with_size">%1$s, последнее изменение: %2$s</string>
+    <string name="error_dir_access">Директория недоступна</string>
 </resources>
