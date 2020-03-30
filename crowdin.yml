@@ -1,0 +1,7 @@
+files:
+  - source: /filepicker/src/main/res/values/strings.xml
+    translation: /filepicker/src/main/res/values-%two_letters_code%/%original_file_name%
+    translate_attributes: 0
+  - source: /filepicker/src/main/res/values/arrays.xml
+    translation: /filepicker/src/main/res/values-%two_letters_code%/%original_file_name%
+    translate_attributes: 0
