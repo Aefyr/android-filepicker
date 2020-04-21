@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="cancel_button_label">Hủy bỏ</string>
+    <string name="choose_button_label">Chọn</string>
+    <string name="label_parent_directory">Thư mục cha mẹ</string>
+    <string name="last_edit">Lần chỉnh sửa cuối: %s</string>
+    <string name="last_edit_with_size">%1$s, lần thay đổi cuối: %2$s</string>
+    <string name="error_dir_access">Không thể truy cập thư mục</string>
+</resources>
