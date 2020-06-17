@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="cancel_button_label">Ləğv et</string>
+    <string name="choose_button_label">Seç</string>
+    <string name="label_parent_directory">Valideyn yeri</string>
+    <string name="last_edit">Son dəyişdirilmə: %s</string>
+    <string name="last_edit_with_size">%1$s, son dəyişdirilmə: %2$s</string>
+    <string name="error_dir_access">Yer əlçatan deyil</string>
+</resources>
